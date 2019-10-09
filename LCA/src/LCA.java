@@ -22,13 +22,13 @@ public class LCA {
 		
 		if(node == null) return node;
 		
-		if(node.value == input1 || node.value == input2) return node; //If either of the input values are reched in the tree then the
+		if(node.value == input1 || node.value == input2) return node; 
+		//If either of the input values are reached in the tree then the
 		//node is returned as the LCA cannot be in a subtree of one of the inputs.
+		
+		Node leftNode = findingLCA(node.left, input1, input2); //Checks all subtrees to left of a node
+		Node rightNode = findingLCA(node.right, input1, input2); //Checks all subtrees to right of a node
 		
 		return null;
 	}
-
-
-
-	
 }
