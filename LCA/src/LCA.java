@@ -3,7 +3,8 @@ public class LCA {
 	
 	class Node {
 		
-		private int value; // The data in the node - changed to int for initial building of functions
+		private int value; // The data in the node - changed to int for initial building of functions - could be using
+		//values & keys in long run
 		private Node left, right; // Left & Right subtree node
 		
 		public Node(int val) {
@@ -20,7 +21,7 @@ public class LCA {
 	
 	Node findingLCA(Node node, int input1, int input2) { //This function will use recursion to find the LCA of 2 inputs.
 		
-		if(node == null) return node;
+		if(node == null) return node; //If the input node is null then null is returned
 		
 		if(node.value == input1 || node.value == input2) return node; 
 		//If either of the input values are reached in the tree then the
@@ -29,10 +30,26 @@ public class LCA {
 		Node leftNode = findingLCA(node.left, input1, input2); //Checks all subtrees to left of a node
 		Node rightNode = findingLCA(node.right, input1, input2); //Checks all subtrees to right of a node
 		
-		if(leftNode != null && rightNode != null) return node;
+		if(leftNode != null && rightNode != null) return node; 
+		//If neither of the subtrees are null then the node is returned
 		
 		if(leftNode != null) return leftNode; //If only leftNode is not null then that node is returned
 		else if(rightNode != null) return rightNode; //Returns rightNode if it is not null	
 		else return null; //Returns null if both nodes are null
 	}
+	
+	/*Node add(int value) {
+		return add(root, value);
+	}
+	
+	/* Function to add a Node to the tree, not sure if this will be needed. - could be used if using Keys & values
+	 * Node add(Node node, int value) {
+		if(node == null) return new Node(value);
+		else {
+			
+		}
+		
+		return null;
+	}*/
+	
 }
