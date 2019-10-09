@@ -29,6 +29,10 @@ public class LCA {
 		Node leftNode = findingLCA(node.left, input1, input2); //Checks all subtrees to left of a node
 		Node rightNode = findingLCA(node.right, input1, input2); //Checks all subtrees to right of a node
 		
-		return null;
+		if(leftNode != null && rightNode != null) return node;
+		
+		if(leftNode != null) return leftNode; //If only leftNode is not null then that node is returned
+		else if(rightNode != null) return rightNode; //Returns rightNode if it is not null	
+		else return null; //Returns null if both nodes are null
 	}
 }
