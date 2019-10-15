@@ -38,18 +38,5 @@ public class LCA {
 		else return null; //Returns null if both nodes are null
 	}
 	
-	/*Node add(int value) {
-		return add(root, value);
-	}
-	
-	/* Function to add a Node to the tree, not sure if this will be needed. - could be used if using Keys & values
-	 * Node add(Node node, int value) {
-		if(node == null) return new Node(value);
-		else {
-			
-		}
-		
-		return null;
-	}*/
 	
 }
