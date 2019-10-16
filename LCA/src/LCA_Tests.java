@@ -20,7 +20,7 @@ class LCA_Tests {
 		//Checking with both values equal to 1
 		assertEquals("Attempting to find LCA for tree with single node",  node, tree.findingLCA(1, 1));
 		//Checking with one value equal to 1 - doesn't currently work - need to debug
-		assertEquals("Attempting to find LCA for tree with single node", node, tree.findingLCA(1,4));
+		assertEquals("Attempting to find LCA for tree with single node", null, tree.findingLCA(1,4));
 		//Checking with neither value equal to 1
 		assertEquals("Attempting to find LCA for tree with single node", null, tree.findingLCA(17,4));
 	}

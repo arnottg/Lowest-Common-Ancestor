@@ -1,21 +1,9 @@
 
 public class LCA {
 	
-	class Node {
-		
-		private int value; // The data in the node - changed to int for initial building of functions - could be using
-		//values & keys in long run
-		private Node left, right; // Left & Right subtree node
-		
-		public Node(int val) {
-			this.value = val;
-			this.left = null;
-			this.right = null;
-		}
-	}
-		
 	Node root;
 	Node findingLCA(int input1, int input2) {
+		if(!isContained(input1) || !isContained(input2)) return null;
 		return findingLCA(root, input1, input2); //The parameters are the 2 input numbers & the top of the tree (root)
 	}
 	
@@ -38,5 +26,33 @@ public class LCA {
 		else return null; //Returns null if both nodes are null
 	}
 	
+	boolean isContained(int value) { //returns true if a value is contained in the tree, false if not
+
+		return isContained(value, root);
+	}
 	
+	boolean isContained(int value, Node node) {
+		
+		if(node == null) return false;
+		if(node.value == value) return true;
+		
+		boolean containedLeft = isContained(value, node.left);
+		boolean containedRight = isContained(value, node.right);
+		
+		return containedLeft || containedRight;
+	}
+	
+}
+
+class Node {
+	
+	public int value; // The data in the node - changed to int for initial building of functions - could be using
+	//values & keys in long run
+	public Node left, right; // Left & Right subtree node
+	
+	public Node(int val) {
+		this.value = val;
+		this.left = null;
+		this.right = null;
+	}
 }
