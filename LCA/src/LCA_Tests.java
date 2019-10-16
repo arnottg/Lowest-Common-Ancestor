@@ -94,4 +94,10 @@ class LCA_Tests {
 		
 	}
 	
+	@Test 
+	void testNodeConstructor(){
+		Node node = new Node(7);
+		assertEquals("Testing if the node constructor worked: ", 7, node.value);
+	}
+	
 }
