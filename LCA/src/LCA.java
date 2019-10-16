@@ -31,6 +31,7 @@ public class LCA {
 		return isContained(value, root);
 	}
 	
+	
 	boolean isContained(int value, Node node) {
 		if(node == null) return false;
 		if(node.value == value) return true;

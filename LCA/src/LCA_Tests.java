@@ -72,6 +72,7 @@ class LCA_Tests {
 		Node node5 = new Node(5);//        4   5   6   7
 		Node node6 = new Node(6);//
 		Node node7 = new Node(7);//
+
 		tree.root = node1;
 		tree.root.left = node2;
 		tree.root.right = node3;
