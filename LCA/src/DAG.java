@@ -1,17 +1,19 @@
 
 public class DAG {
 	
-	private int V;//Number of vertices in graph
+	public int V;//Number of vertices in graph
 	private int E;//Number of edges in graph
 	private int[][] adjList; //2D array adjacency list for vertex v
 	private int[] outdegree;//outdegree of vertex v
 	private int[] indegree; // indegree of vertex v
 	private int[] visited;  //2D array of visited vertices
+	public int invalidV;
 	
     //constructor to initialize and empty graph with size V
     public DAG(int V){
 		if(V < 0){
-	    	throw new IllegalArgumentException("DAG cannot have less than 0 vertices");
+			invalidV = -1;
+	    	System.out.println("DAG cannot have less than 0 vertices");
 	    }
 	    else{
 	    	this.V = V;
@@ -50,7 +52,7 @@ public class DAG {
 		//Checking if vertices are in bounds
 		checkVertex(v);
 		checkVertex(w);
-		adjList[v][w]=1; //Adds the edge to the adjacent list
+		adjList[v][w] = 1; //Adds the edge to the adjacent list
 		indegree[w]++; //The number of edges entering vertex w is increased by 1
 		outdegree[v]++; //The number of edges leaving vertex v is decreased by 1
 		E++;

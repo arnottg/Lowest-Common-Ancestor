@@ -51,8 +51,8 @@ class Node {
 	public Node left, right; // Left & Right subtree node
 	
 	public Node(int val) {
-		this.value = val;
-		this.left = null;
-		this.right = null;
+			this.value = val;
+			this.left = null;
+			this.right = null;
 	}
 }
