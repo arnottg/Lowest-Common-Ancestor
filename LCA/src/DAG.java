@@ -21,7 +21,7 @@ public class DAG {
 	    	adjList = new int[V][V];
 	    	for(int i = 0; i<V; i++){//sets up an empty graph in 2D array
 	    		for(int j=0;j<V;j++){
-	    			adjList[i][j] = 0;
+	    			adjList[i][j] = 0; //Creating a DAG with no edges yet connecting vertices
 	    		}
 	    	}
 	    }
@@ -39,7 +39,7 @@ public class DAG {
 	
 	//throws illegal exception if the vertex put in is invalid
 	private void checkVertex(int v){
-		if((v<0)||(v>=V)){
+		if((v<0)||(v>=V)){ //Vertex must be between 0 and V or is out of bounds
     		throw new IllegalArgumentException("Input vertex is out of bounds, v must be between 0 and " + V);
 		}
 	}
@@ -77,5 +77,7 @@ public class DAG {
     	checkVertex(v); //Checks if the vertex is in bounds
     	return indegree[v];
     }
+    
+    
     
 }
