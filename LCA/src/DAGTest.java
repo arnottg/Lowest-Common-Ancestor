@@ -29,8 +29,11 @@ class DAGTest {
 		assertEquals("Testing v > V when V > 0: ", -1, dag2.checkVertex(4));
 	}
 	
+	//indegree(), outdegree() and adjList() functions are also tested in the following 2 tests:
+	
 	@Test
 	void testAddEdge() {
+		
 		DAG dag1 = new DAG(4);
 		//The following 6 tests are testing a regular case for addEdge
 		assertEquals("Testing addEdge for a regular case: ", 1, dag1.addEdge(1, 2));
@@ -51,6 +54,28 @@ class DAGTest {
 		
 	}
 	
-	
+	@Test
+	void testRemoveEdge() {
+		DAG dag1 = new DAG(4);
+		//The following 6 tests are testing a regular case for removeEdge
+		dag1.addEdge(1,2);
+		assertEquals("Testing addEdge for a regular case: ", 1, dag1.removeEdge(1, 2));
+		assertEquals("Checking outdegree of 1: ", 0, dag1.outdegree(1));
+		assertEquals("Checking indegree of 1: ", 0, dag1.indegree(1));
+		assertEquals("Checking indegree of 2: ", 0, dag1.indegree(2));
+		assertEquals("Checking outdegree of 2: ", 0, dag1.outdegree(2));
+		assertEquals("Checking adjacent List: ", null, dag1.adjList(1));
+		
+		DAG dag2 = new DAG(4);
+		//Testing for removing non-existent edge
+		assertEquals("Testing non-existent edge: ", -1, dag2.removeEdge(1, 3));
+		assertEquals("Testing non-existent edge where v = w; ", -1, dag2.removeEdge(2, 2));
+		
+		DAG dag3 = new DAG(5);
+		//Testing for removing invalid vertices:
+		assertEquals("Testing for invalid inputs: ", -1, dag3.removeEdge(-1, 2));
+		assertEquals("Testing for invalid inputs: ", -1, dag3.removeEdge(1, 6));
+		
+	}
 
 }
