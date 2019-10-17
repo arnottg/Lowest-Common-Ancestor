@@ -78,6 +78,38 @@ public class DAG {
     	return indegree[v];
     }
     
+    //returns the vertices adjacent from vertex v
+    public int[] adjList(int v){
+    	checkVertex(v); //Checking if v is in bounds
+    	int[] adj = new int[outdegree[v]]; //Creates an Array of size outdegree of vertex v
+    	int count = 0;
+    	for(int i = 0; i < V; i++){
+    		if(adjList[v][i] == 1){ //If there is a directed edge between v and i, it is added to the adj list
+    			adj[count] = i;
+    			count++;
+    		}
+    	}
+    	return adj;
+    }
     
+  //returns true if the graph contains a cycle, else false
+    public boolean hasCycle(){
+    	boolean hasCycle = false; //A boolean tracking whether or not the DAG has a cycle
+    	int count = 0; //Counter token to be incremented & used to find cycle
+    	for(int i = 0; i < V; i++){
+    		visited[count] = i;
+    		for(int j = 0; j < V; j++){
+    			for(int k = 0; k < V; k++){
+    				if(visited[k] == j && adjList[i][j] == 1){
+    					hasCycle=true; //If a cycle is contained, true is returned
+    					return hasCycle;
+    				}
+    			}	
+    		}
+    		count++;
+    	}
+    	return hasCycle;
+    }
+
     
 }
