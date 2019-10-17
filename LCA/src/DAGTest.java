@@ -77,5 +77,32 @@ class DAGTest {
 		assertEquals("Testing for invalid inputs: ", -1, dag3.removeEdge(1, 6));
 		
 	}
+	
+	@Test
+	void testHasCycle() {
+		DAG cycle = new DAG(5);
+		cycle.addEdge(0, 1);
+		cycle.addEdge(1, 2);
+		cycle.addEdge(3, 0);
+		cycle.addEdge(2, 3);
+		cycle.addEdge(2, 4);
+		cycle.addEdge(4, 2);
+		DAG acyclic = new DAG(4);
+		acyclic.addEdge(0, 1);
+		acyclic.addEdge(1, 3);
+		acyclic.addEdge(0, 2);
+		acyclic.addEdge(2, 3);
+		
+		//Testing hasCycle on cyclic graph:
+		assertEquals("Testing cycle: ", true, cycle.hasCycle());
+		
+		//Testing hasCycle on acyclic graph:
+		assertEquals("Testing cycle: ", false, acyclic.hasCycle());
+		
+		DAG empty = new DAG(0);
+		
+		//Testing hasCycle on empty graph:
+		assertEquals("Testing empty: ", false, empty.hasCycle());
+	}
 
 }
