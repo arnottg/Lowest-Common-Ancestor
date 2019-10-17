@@ -51,7 +51,7 @@ public class DAG {
   //adds directed edge from v to w
 	public int addEdge(int v, int w){
 		//Checking if vertices are in bounds
-		if(checkVertex(v) == 1 && checkVertex(w) == 1) {
+		if(checkVertex(v) == 1 && checkVertex(w) == 1 && v != w) {
 			adjList[v][w] = 1; //Adds the edge to the adjacent list
 			indegree[w]++; //The number of edges entering vertex w is increased by 1
 			outdegree[v]++; //The number of edges leaving vertex v is decreased by 1
@@ -65,7 +65,7 @@ public class DAG {
     public int removeEdge(int v, int w){
     	//Checking if vertices are in bounds
     	if(checkVertex(v) == 1 && checkVertex(w) == 1) {;
-	    	adjList[v][w]=0; //Removing the edge from the adjacent list
+	    	adjList[v][w] = 0; //Removing the edge from the adjacent list
 	    	indegree[w]--; //The number of edges entering vertex w is decreased by 1
 	    	outdegree[v]--; //The number of edges leaving vertex v is decreased by 1
 	    	E--;

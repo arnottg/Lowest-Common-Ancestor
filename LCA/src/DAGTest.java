@@ -29,6 +29,28 @@ class DAGTest {
 		assertEquals("Testing v > V when V > 0: ", -1, dag2.checkVertex(4));
 	}
 	
+	@Test
+	void testAddEdge() {
+		DAG dag1 = new DAG(4);
+		//The following 6 tests are testing a regular case for addEdge
+		assertEquals("Testing addEdge for a regular case: ", 1, dag1.addEdge(1, 2));
+		assertEquals("Checking outdegree of 1: ", 1, dag1.outdegree(1));
+		assertEquals("Checking indegree of 1: ", 0, dag1.indegree(1));
+		assertEquals("Checking indegree of 2: ", 1, dag1.indegree(2));
+		assertEquals("Checking outdegree of 2: ", 0, dag1.outdegree(2));
+		assertEquals("Checking adjacent List: ", 2, dag1.adjList(1)[0]);
+		
+		DAG dag2 = new DAG(2);
+		//Testing for adding an edge to itself
+		assertEquals("Testing addEdge from 1 to 1: ", -1, dag2.addEdge(1, 1));
+		
+		DAG dag3 = new DAG(3);
+		//Inputting out of bounds edges
+		assertEquals("Testing addEdge from -1 to 1: ", -1, dag3.addEdge(-1, 1));
+		assertEquals("Testing addEdge from 0 to 4: ", -1, dag3.addEdge(0, 4));
+		
+	}
+	
 	
 
 }
