@@ -38,11 +38,6 @@ public class DAG {
 		return V;
 	}
 	
-	//returns number of edges in DAG - Used for tests
-	public int edges(){
-		return E;
-	}
-	
 	//throws illegal exception if the vertex put in is invalid
 	public int checkVertex(int v){
 		if((v < 0)||(v >= V)){ //Vertex must be between 0 and V-1 or is out of bounds

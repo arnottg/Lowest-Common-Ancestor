@@ -133,7 +133,6 @@ class DAGTest {
 		acyclic.addEdge(4, 6);
 		acyclic.addEdge(5, 7);
 		acyclic.addEdge(6, 7);
-		acyclic.addEdge(7, 8);
 		
 		
 		
@@ -158,8 +157,49 @@ class DAGTest {
 	}
 	
 	@Test
+	public void testPathExists() {
+		DAG dag = new DAG(4);
+		dag.addEdge(0, 1);
+		dag.addEdge(0, 2);
+		dag.addEdge(1, 3);
+		dag.addEdge(2, 3);
+		
+		assertEquals("", true, dag.pathExists(0, 1)); //Testing adjacent vertices
+		assertEquals("", true, dag.pathExists(0, 2)); //Testing adjacent vertices
+		assertEquals("", true, dag.pathExists(0, 3)); //Testing non-adjacent path
+		assertEquals("", false, dag.pathExists(1, 2)); //Testing non-existent path
+	}
+	
+	@Test
 	public void testEmptyDAG() {
 		DAG dag = new DAG(5);
 		assertEquals("", -2, dag.findingLCA(1, 2));
 	}
+	
+	@Test
+	public void testOutdegreeAndIndegree() {
+		DAG dag = new DAG(3);
+		dag.addEdge(0, 1);
+		dag.addEdge(0, 2);
+		dag.addEdge(1, 2);
+		
+		//Testing outdegree()
+		assertEquals("", 2, dag.outdegree(0));
+		assertEquals("", 1, dag.outdegree(1));
+		assertEquals("", 0, dag.outdegree(2));
+		//Testing out of bounds vertices
+		assertEquals("", -1, dag.outdegree(-1));
+		assertEquals("", -1, dag.outdegree(6));
+		
+		//Testing indegree()
+		assertEquals("", 0, dag.indegree(0));
+		assertEquals("", 1, dag.indegree(1));
+		assertEquals("", 2, dag.indegree(2));
+		//Testing out of bounds vertices
+		assertEquals("", -1, dag.indegree(-4));
+		assertEquals("", -1, dag.outdegree(6));
+		
+		
+	}
+	
 }
