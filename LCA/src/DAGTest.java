@@ -150,11 +150,9 @@ class DAGTest {
 		assertEquals("Testing for v = w: ", 2, same.findingLCA(2, 2));
 		
 		//Testing LCA for acyclic graph
-		assertEquals("", 7, acyclic.findingLCA(3, 4));
-		assertEquals("", 7, acyclic.findingLCA(1, 4));
-		assertEquals("", 7, acyclic.findingLCA(5, 2));
-		assertEquals("", 3, acyclic.findingLCA(1, 3));
+		assertEquals("", 0, acyclic.findingLCA(3, 4));
+		assertEquals("", 0, acyclic.findingLCA(1, 4));
+		assertEquals("", 0, acyclic.findingLCA(5, 2));
 		
 	}
-
 }

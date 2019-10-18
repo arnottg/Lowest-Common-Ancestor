@@ -23,9 +23,9 @@ public class DAG {
 	    	outdegree = new int[V];
 	    	visited = new int[V];
 	    	adjList = new int[V][V];
-	    	for(int i = 0; i<V; i++){//sets up an empty graph in 2D array
+	    	for(int i = 0; i<V; i++){ //sets up an empty graph in 2D array
 	    		for(int j=0;j<V;j++){
-	    			adjList[i][j] = 0; //Creating a DAG with no edges yet connecting vertices
+	    			adjList[i][j] = 0; //Creating a DAG with no edges
 	    		}
 	    	}
 	    }
@@ -134,7 +134,7 @@ public class DAG {
     	if(checkVertex(v) == 1 && checkVertex(w) == 1) {
     		hasCycle();
 	    	if(E > 0 && !hasCycle){ //If the DAG does not contain a cycle and has edges > 0, we can attempt to find the LCA
-	    		return LCAInner(v, w);	
+	    		return LCAHelper(v, w);	
 	    	}
 	    	return -2;
     	}
@@ -143,7 +143,7 @@ public class DAG {
     
     
     
-    public int LCAInner(int v, int w) { //Code to help LCA
+    public int LCAHelper(int v, int w) { //Code to help findingLCA
     	if(v == w) return v;
 		int[] vArray = new int[E];
 		int[] wArray = new int[E];
@@ -157,22 +157,24 @@ public class DAG {
 			vMarked[j] = false;
 			wMarked[j] = false;
 		}
-		for(int i =0; i < V; i++){
-			vMarked[v] = true;
-			wMarked[w] = true;
-			for(int j = 0; j < V; j++){
-				if(adjList[i][j] == 1 && vMarked[i]){
-					vCount++;
-					vArray[vCount] = j;
-					vMarked[j]=true;
-				}
-				if(adjList[i][j] == 1 && wMarked[i]){
-					wCount++;
-					wArray[wCount] = j;
-					wMarked[j] = true;
-				}
-				if(wArray[wCount] == vArray[vCount]){
-					return wArray[wCount];
+		for(int k = 0; k < V; k++) {
+			for(int i =0; i < V; i++){
+				vMarked[v] = true;
+				wMarked[w] = true;
+				for(int j = 0; j < V; j++){
+					if(adjList[j][i] == 1 && vMarked[i]){
+						vCount++;
+						vArray[vCount] = j;
+						vMarked[j]=true;
+					}
+					if(adjList[j][i] == 1 && wMarked[i]){
+						wCount++;
+						wArray[wCount] = j;
+						wMarked[j] = true;
+					}
+					if(wArray[wCount] == vArray[vCount]){
+						return wArray[wCount];
+					}
 				}
 			}
 		}
