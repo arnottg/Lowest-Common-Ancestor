@@ -8,6 +8,7 @@ public class DAG {
 	private int[] indegree; // indegree of vertex v
 	private int[] visited;  //2D array of visited vertices
 	public int invalidV;
+	private boolean hasCycle;
 	
     //constructor to initialize and empty graph with size V
     public DAG(int V){
@@ -51,7 +52,7 @@ public class DAG {
   //adds directed edge from v to w
 	public int addEdge(int v, int w){
 		//Checking if vertices are in bounds
-		if(checkVertex(v) == 1 && checkVertex(w) == 1 && v != w) {
+		if(checkVertex(v) == 1 && checkVertex(w) == 1) {
 			adjList[v][w] = 1; //Adds the edge to the adjacent list
 			indegree[w]++; //The number of edges entering vertex w is increased by 1
 			outdegree[v]++; //The number of edges leaving vertex v is decreased by 1
@@ -64,7 +65,7 @@ public class DAG {
     //Removes an edge from v to w
     public int removeEdge(int v, int w){
     	//Checking if vertices are in bounds
-    	if(checkVertex(v) == 1 && checkVertex(w) == 1 && v != w && adjList[v][w] == 1) {;
+    	if(checkVertex(v) == 1 && checkVertex(w) == 1 && adjList[v][w] == 1) {;
 	    	adjList[v][w] = 0; //Removing the edge from the adjacent list
 	    	indegree[w]--; //The number of edges entering vertex w is decreased by 1
 	    	outdegree[v]--; //The number of edges leaving vertex v is decreased by 1
@@ -107,12 +108,16 @@ public class DAG {
     public boolean hasCycle(){
     	boolean hasCycle = false; //A boolean tracking whether or not the DAG has a cycle
     	int count = 0; //Counter token to be incremented & used to find cycle
+    	for(int visit = 0; visit < V; visit++) {
+    		visited[visit] = 0; // resetting visited array
+    	}
     	for(int i = 0; i < V; i++){
     		visited[count] = i;
     		for(int j = 0; j < V; j++){
     			for(int k = 0; k < V; k++){
     				if(visited[k] == j && adjList[i][j] == 1){
-    					hasCycle=true; //If a cycle is contained, true is returned
+    					hasCycle = true; //If a cycle is contained, true is returned
+    					this.hasCycle = hasCycle;
     					return hasCycle;
     				}
     			}	
@@ -124,47 +129,53 @@ public class DAG {
     
     //Found some nice code for LCA of DAG online, adjustments will be necessary to get my tests to work
     //This public function is used to find the LCA in a DAG
-    public int findingLCA(int v, int w){
+    public int findingLCA(int v, int w) {
+    	
     	if(checkVertex(v) == 1 && checkVertex(w) == 1) {
-	    	if(E > 0 && !hasCycle()){ //If the DAG does not contain a cycle and has edges > 0, we can attempt to find the LCA
-	    		int[] vArray = new int[E];
-	    		int[] wArray = new int[E];
-	    		boolean[] vMarked = new boolean[V];
-	    		boolean[] wMarked = new boolean[V];
-	    		int vCount =0;
-	    		int wCount = 0;
-	    		vArray[vCount] = v;
-	    		wArray[wCount] = w;
-	    		for(int j=0; j<V;j++){ //mark all vertices as not been visited yet
-	    			vMarked[j] = false;
-	    			wMarked[j] = false;
-	    		}
-	    		for(int i =0; i < V; i++){
-	    			vMarked[v] = true;
-	    			wMarked[w] = true;
-	    			for(int j = 0; j < V; j++){
-	    				if(adjList[i][j] == 1 && vMarked[i]){
-	    					vCount++;
-	    					vArray[vCount]=j;
-	    					vMarked[j]=true;
-	    				}
-	    				if(adjList[i][j] == 1 && wMarked[i]){
-	    					wCount++;
-	    					wArray[wCount]=j;
-	    					wMarked[j]=true;
-	    				}
-	    				if(wArray[wCount] == vArray[vCount]){
-	    					return wArray[wCount];
-	    				}
-	    			}
-	    		}
-	    		return -1;//returns -1 if no ancestor found
+    		hasCycle();
+	    	if(E > 0 && !hasCycle){ //If the DAG does not contain a cycle and has edges > 0, we can attempt to find the LCA
+	    		return LCAInner(v, w);	
 	    	}
-	    	else{
-	    		return -2;//returns -2 if graph has edges and has a cycle
-	    	}
+	    	return -2;
     	}
-    	else return -3; //returns -3 if v or w are out of bounds
+    	return -3; //returns -3 if v or w are out of bounds
     }
     
+    
+    
+    public int LCAInner(int v, int w) { //Code to help LCA
+    	if(v == w) return v;
+		int[] vArray = new int[E];
+		int[] wArray = new int[E];
+		boolean[] vMarked = new boolean[V];
+		boolean[] wMarked = new boolean[V];
+		int vCount =0;
+		int wCount = 0;
+		vArray[vCount] = v;
+		wArray[wCount] = w;
+		for(int j = 0; j < V; j++){ //mark all vertices as not been visited yet
+			vMarked[j] = false;
+			wMarked[j] = false;
+		}
+		for(int i =0; i < V; i++){
+			vMarked[v] = true;
+			wMarked[w] = true;
+			for(int j = 0; j < V; j++){
+				if(adjList[i][j] == 1 && vMarked[i]){
+					vCount++;
+					vArray[vCount] = j;
+					vMarked[j]=true;
+				}
+				if(adjList[i][j] == 1 && wMarked[i]){
+					wCount++;
+					wArray[wCount] = j;
+					wMarked[j] = true;
+				}
+				if(wArray[wCount] == vArray[vCount]){
+					return wArray[wCount];
+				}
+			}
+		}
+		return -1; //returns -1 if no ancestor found
+	}
 }

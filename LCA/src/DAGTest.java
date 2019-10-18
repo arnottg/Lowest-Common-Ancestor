@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 class DAGTest {
 	
+	DAG acyclic = new DAG(8);
+	
 	@Test
 	void testConstructor() { //This will test the constructor and the vertices() function
 		//Test error case
@@ -45,7 +47,7 @@ class DAGTest {
 		
 		DAG dag2 = new DAG(2);
 		//Testing for adding an edge to itself
-		assertEquals("Testing addEdge from 1 to 1: ", -1, dag2.addEdge(1, 1));
+		assertEquals("Testing addEdge from 1 to 1: ", 1, dag2.addEdge(1, 1));
 		
 		DAG dag3 = new DAG(3);
 		//Inputting out of bounds edges
@@ -69,25 +71,31 @@ class DAGTest {
 		DAG dag2 = new DAG(4);
 		//Testing for removing non-existent edge
 		assertEquals("Testing non-existent edge: ", -1, dag2.removeEdge(1, 3));
-		assertEquals("Testing non-existent edge where v = w; ", -1, dag2.removeEdge(2, 2));
 		
-		DAG dag3 = new DAG(5);
+		DAG dag3 = new DAG(4);
+		dag3.addEdge(2, 2);
+		//Testing for v = w
+		assertEquals("Testing edge where v = w; ", 1, dag3.removeEdge(2, 2));
+		
+		DAG dag4 = new DAG(5);
 		//Testing for removing invalid vertices:
-		assertEquals("Testing for invalid inputs: ", -1, dag3.removeEdge(-1, 2));
-		assertEquals("Testing for invalid inputs: ", -1, dag3.removeEdge(1, 6));
+		assertEquals("Testing for invalid inputs: ", -1, dag4.removeEdge(-1, 2));
+		assertEquals("Testing for invalid inputs: ", -1, dag4.removeEdge(1, 6));
 		
 	}
 	
 	@Test
 	void testHasCycle() {
 		DAG cycle = new DAG(5);
+		DAG acyclic = new DAG(4);
+		
 		cycle.addEdge(0, 1);
 		cycle.addEdge(1, 2);
 		cycle.addEdge(3, 0);
 		cycle.addEdge(2, 3);
 		cycle.addEdge(2, 4);
 		cycle.addEdge(4, 2);
-		DAG acyclic = new DAG(4);
+		
 		acyclic.addEdge(0, 1);
 		acyclic.addEdge(1, 3);
 		acyclic.addEdge(0, 2);
@@ -100,9 +108,53 @@ class DAGTest {
 		assertEquals("Testing cycle: ", false, acyclic.hasCycle());
 		
 		DAG empty = new DAG(0);
-		
 		//Testing hasCycle on empty graph:
 		assertEquals("Testing empty: ", false, empty.hasCycle());
+	}
+	
+	@Test
+	void testFindingLCA() {
+		DAG cycle = new DAG(5);
+		DAG acyclic = new DAG(8);
+		DAG same = new DAG(4);
+		
+		cycle.addEdge(0, 1);
+		cycle.addEdge(1, 2);
+		cycle.addEdge(3, 0);
+		cycle.addEdge(2, 3);
+		cycle.addEdge(2, 4);
+		cycle.addEdge(4, 2);
+		
+		same.addEdge(1, 2);
+		
+		acyclic.addEdge(0, 1);
+		acyclic.addEdge(0, 2);
+		acyclic.addEdge(1, 3);
+		acyclic.addEdge(2, 4);
+		acyclic.addEdge(3, 5);
+		acyclic.addEdge(4, 6);
+		acyclic.addEdge(5, 7);
+		acyclic.addEdge(6, 7);
+		acyclic.addEdge(7, 8);
+		
+		
+		
+		//Testing finding LCA for invalid inputs:
+		assertEquals("Testing invalid inputs: ", -3, acyclic.findingLCA(-1, 3));
+		assertEquals("Testing invalid inputs: ", -3, acyclic.findingLCA(1,  9));
+		
+		//Testing findingLCA for graph with a cycle: 
+		assertEquals("Testing graph with cycle: ", -2, cycle.findingLCA(1, 2));
+		
+		//Testing findingLCA for same input:
+		assertEquals("Testing for v = w: ", 2, same.findingLCA(2, 2));
+		
+		//Testing LCA for acyclic graph
+		assertEquals("", 7, acyclic.findingLCA(3, 4));
+		assertEquals("", 7, acyclic.findingLCA(1, 4));
+		assertEquals("", 7, acyclic.findingLCA(5, 2));
+		assertEquals("", 3, acyclic.findingLCA(1, 3));
+		
 	}
 
 }
