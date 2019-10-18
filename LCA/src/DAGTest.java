@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 class DAGTest {
 	
-	DAG acyclic = new DAG(8);
-	
 	@Test
 	void testConstructor() { //This will test the constructor and the vertices() function
 		//Test error case
@@ -153,6 +151,13 @@ class DAGTest {
 		assertEquals("", 0, acyclic.findingLCA(3, 4));
 		assertEquals("", 0, acyclic.findingLCA(1, 4));
 		assertEquals("", 0, acyclic.findingLCA(5, 2));
+		assertEquals("", 1, acyclic.findingLCA(1, 1));
 		
+	}
+	
+	@Test
+	public void testEmptyDAG() {
+		DAG dag = new DAG(5);
+		assertEquals("", -2, dag.findingLCA(1, 2));
 	}
 }

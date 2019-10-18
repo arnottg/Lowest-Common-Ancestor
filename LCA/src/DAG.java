@@ -145,6 +145,7 @@ public class DAG {
     
     public int LCAHelper(int v, int w) { //Code to help findingLCA
     	if(v == w) return v;
+    	int output = -1;
 		int[] vArray = new int[E];
 		int[] wArray = new int[E];
 		boolean[] vMarked = new boolean[V];
@@ -153,6 +154,8 @@ public class DAG {
 		int wCount = 0;
 		vArray[vCount] = v;
 		wArray[wCount] = w;
+		int count1;
+		int count2 = 0;
 		for(int j = 0; j < V; j++){ //mark all vertices as not been visited yet
 			vMarked[j] = false;
 			wMarked[j] = false;
@@ -173,11 +176,14 @@ public class DAG {
 						wMarked[j] = true;
 					}
 					if(wArray[wCount] == vArray[vCount]){
-						return wArray[wCount];
+						j = V;
+						k = V;
+						i = V;
+						output = wArray[wCount];
 					}
 				}
 			}
 		}
-		return -1; //returns -1 if no ancestor found
+		return output;
 	}
 }
