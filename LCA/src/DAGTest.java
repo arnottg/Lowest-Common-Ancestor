@@ -152,6 +152,8 @@ class DAGTest {
 		assertEquals("", 0, acyclic.findingLCA(1, 4));
 		assertEquals("", 0, acyclic.findingLCA(5, 2));
 		assertEquals("", 1, acyclic.findingLCA(1, 1));
+		assertEquals("", 1, acyclic.findingLCA(1, 3)); //Testing 2 adjacent vertices
+		assertEquals("", 2, acyclic.findingLCA(2, 6)); //Testing 2 indirectly connected nodes
 		
 	}
 	

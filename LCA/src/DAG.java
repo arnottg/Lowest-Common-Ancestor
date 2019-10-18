@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAG {
 	
@@ -145,6 +147,8 @@ public class DAG {
     
     public int LCAHelper(int v, int w) { //Code to help findingLCA
     	if(v == w) return v;
+    	if(pathExists(v, w)) return v;
+    	if(pathExists(w, v)) return w;
     	int output = -1;
 		int[] vArray = new int[E];
 		int[] wArray = new int[E];
@@ -186,4 +190,25 @@ public class DAG {
 		}
 		return output;
 	}
+    
+    //Found some code on Stack Overflow for pathExists()
+      
+    public boolean pathExists(int start, int end)
+    {
+      List<Integer> visited = new ArrayList<Integer>();
+      List<Integer> inprocess = new ArrayList<Integer>();
+      inprocess.add(start);
+
+      while(inprocess.size() > 0)
+      {
+        int cur = inprocess.get(0);
+        inprocess.remove(0);
+        if(cur == end) return true;
+        if(visited.contains(cur)) continue;
+        visited.add(cur);
+        for(int i = 0; i < adjList.length; i++)
+          if(adjList[cur][i] == 1 && !visited.contains(i) && !inprocess.contains(i)) inprocess.add(i);
+      }
+      return false;
+    }
 }
